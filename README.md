@@ -51,3 +51,46 @@ y ejecutar manualmente los scripts **tablas.sql y procedimientos.sql**
 
 Posterior a ejecutar los scripts ya sea puede abrir la aplicación mediante la url **http://localhost:4200** e interactuar con la aplicación.
 
+**Listado de clientes**
+<img width="1501" height="510" alt="Captura de pantalla 2026-07-29 a la(s) 11 13 56 p  m" src="https://github.com/user-attachments/assets/7b2d5423-12b8-47b7-863f-bf6947db3e6a" />
+
+**NUEVO CLIENTE**
+
+<img width="1501" height="510" alt="Captura de pantalla 2026-07-29 a la(s) 11 13 56 p  m" src="https://github.com/user-attachments/assets/7b2d5423-12b8-47b7-863f-bf6947db3e6a" />
+
+Entre los clientes tenemos el botón de ver solicitudes
+
+<img width="1206" height="413" alt="Captura de pantalla 2026-07-29 a la(s) 11 16 28 p  m" src="https://github.com/user-attachments/assets/e53075bd-989e-4b16-8dc2-0953f6a8879a" />
+
+El cual nos muestra las solicitudes que tiene el cliente y nos permite crear una nueva
+
+<img width="1497" height="396" alt="Captura de pantalla 2026-07-29 a la(s) 11 17 10 p  m" src="https://github.com/user-attachments/assets/416daaf3-9566-4295-95f6-d76b4b18c513" />
+
+<img width="880" height="474" alt="Captura de pantalla 2026-07-29 a la(s) 11 18 02 p  m" src="https://github.com/user-attachments/assets/2778c52c-c397-4a7e-8913-838d1dcb1914" />
+
+**Solicitudes de Préstamo**
+Se visualizan las solicitudes ya sea pendientes, aprobadas o rechazadas.
+
+<img width="1484" height="360" alt="Captura de pantalla 2026-07-29 a la(s) 11 18 26 p  m" src="https://github.com/user-attachments/assets/99083e8a-b583-46d8-98b7-9097a3736047" />
+
+**Prestamos Aprobados**
+
+Pantalla que muestra las solicitudes aprobadas.
+
+<img width="1414" height="334" alt="Captura de pantalla 2026-07-29 a la(s) 11 20 23 p  m" src="https://github.com/user-attachments/assets/7f27a1c0-bd55-47d4-b2bd-6fa9b1d076e2" />
+
+Al ver las **Acciones** nos da la opción de ver nuestra solicitud, el detalle de la misma y poder realizar pagos si esta está aprobada.
+
+<img width="1056" height="778" alt="Captura de pantalla 2026-07-29 a la(s) 11 21 01 p  m" src="https://github.com/user-attachments/assets/91570b01-a5ef-49f2-80e8-e83ade1ab7e7" />
+
+Si la solicitud fue rechazada, solo muestra información de la misma, más no la opción de realizar pago.
+
+<img width="958" height="467" alt="Captura de pantalla 2026-07-29 a la(s) 11 22 23 p  m" src="https://github.com/user-attachments/assets/ce634dbe-c178-4876-8b36-8d80a693abb7" />
+
+
+
+
+
+
+
+
