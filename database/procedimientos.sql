@@ -58,11 +58,11 @@ GO
 CREATE OR ALTER PROCEDURE sp_cliente_crear
     @nombre VARCHAR(100),
     @apellido VARCHAR(100),
-    @numeroIdentificacion VARCHAR(30),
+    @numeroIdentificacion VARCHAR(13),
     @fechaNacimiento DATE,
     @direccion VARCHAR(255),
     @correo VARCHAR(150),
-    @telefono VARCHAR(30),
+    @telefono VARCHAR(15),
     @id BIGINT OUTPUT
 AS
 BEGIN
@@ -95,11 +95,11 @@ CREATE OR ALTER PROCEDURE sp_cliente_actualizar
     @id BIGINT,
     @nombre VARCHAR(100),
     @apellido VARCHAR(100),
-    @numeroIdentificacion VARCHAR(30),
+    @numeroIdentificacion VARCHAR(13),
     @fechaNacimiento DATE,
     @direccion VARCHAR(255),
     @correo VARCHAR(150),
-    @telefono VARCHAR(30)
+    @telefono VARCHAR(15)
 AS
 BEGIN
     UPDATE cliente
