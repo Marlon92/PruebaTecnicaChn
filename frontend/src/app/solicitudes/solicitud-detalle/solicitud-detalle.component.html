@@ -1,0 +1,101 @@
+<div *ngIf="solicitud">
+
+  <h1>Solicitud de {{ solicitud.clienteNombreCompleto }}</h1>
+
+  <mat-card class="tarjeta">
+    <mat-card-content>
+      <p><strong>Monto solicitado:</strong> {{ solicitud.montoSolicitado | number:'1.2-2' }}</p>
+      <p><strong>Plazo:</strong> {{ solicitud.plazoMeses }} meses</p>
+      <p><strong>Motivo:</strong> {{ solicitud.motivo || '-' }}</p>
+      <p><strong>Fecha de solicitud:</strong> {{ solicitud.fechaSolicitud | date:'dd/MM/yyyy HH:mm' }}</p>
+      <p><strong>Estado:</strong> {{ solicitud.estado }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="solicitud.estado === 'PENDIENTE'" class="tarjeta">
+    <mat-card-title>Resolver solicitud</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="formAprobar" class="formulario">
+        <mat-form-field appearance="outline">
+          <mat-label>Tasa de interes (%)</mat-label>
+          <input matInput type="number" formControlName="tasaInteres">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Comentario</mat-label>
+          <textarea matInput formControlName="comentario" rows="2"></textarea>
+        </mat-form-field>
+
+        <div class="acciones">
+          <button mat-raised-button color="warn" type="button" (click)="rechazar()">Rechazar</button>
+          <button mat-raised-button color="primary" type="button" (click)="aprobar()">Aprobar</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="solicitud.estado === 'RECHAZADA'" class="tarjeta">
+    <mat-card-content>
+      <p><strong>Comentario de rechazo:</strong> {{ solicitud.comentarioResolucion || '-' }}</p>
+      <p><strong>Fecha de resolucion:</strong> {{ solicitud.fechaResolucion | date:'dd/MM/yyyy HH:mm' }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="solicitud.estado === 'APROBADA'" class="tarjeta">
+    <mat-card-title>Detalle del prestamo</mat-card-title>
+    <mat-card-content>
+      <p><strong>Tasa de interes:</strong> {{ solicitud.tasaInteres }}%</p>
+      <p><strong>Monto total a pagar:</strong> {{ solicitud.montoTotalPagar | number:'1.2-2' }}</p>
+      <p><strong>Total pagado:</strong> {{ solicitud.totalPagado | number:'1.2-2' }}</p>
+      <p><strong>Saldo pendiente:</strong> {{ solicitud.saldoPendiente | number:'1.2-2' }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="solicitud.estado === 'APROBADA'" class="tarjeta">
+    <mat-card-title>Pagos registrados</mat-card-title>
+    <mat-card-content>
+
+      <table mat-table [dataSource]="pagos" class="tabla">
+
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let pago">{{ pago.fechaPago | date:'dd/MM/yyyy HH:mm' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="monto">
+          <th mat-header-cell *matHeaderCellDef>Monto</th>
+          <td mat-cell *matCellDef="let pago">{{ pago.monto | number:'1.2-2' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="observacion">
+          <th mat-header-cell *matHeaderCellDef>Observacion</th>
+          <td mat-cell *matCellDef="let pago">{{ pago.observacion || '-' }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnasPagos"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnasPagos;"></tr>
+      </table>
+
+      <p *ngIf="pagos.length === 0" class="vacio">Todavia no se han registrado pagos.</p>
+
+      <form *ngIf="(solicitud.saldoPendiente || 0) > 0" [formGroup]="formPago" (ngSubmit)="registrarPago()" class="formulario formulario-pago">
+        <mat-form-field appearance="outline">
+          <mat-label>Monto del pago</mat-label>
+          <input matInput type="number" formControlName="monto">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Observacion</mat-label>
+          <input matInput formControlName="observacion">
+        </mat-form-field>
+
+        <div class="acciones">
+          <button mat-raised-button color="primary" type="submit">Pagar</button>
+        </div>
+      </form>
+
+      <p *ngIf="(solicitud.saldoPendiente || 0) <= 0" class="vacio">El prestamo ya fue pagado por completo.</p>
+    </mat-card-content>
+  </mat-card>
+
+</div>

@@ -1,0 +1,31 @@
+.tarjeta {
+  max-width: 640px;
+  margin-bottom: 16px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.formulario-pago {
+  margin-top: 16px;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tabla {
+  width: 100%;
+}
+
+.vacio {
+  margin-top: 8px;
+  color: rgba(0, 0, 0, 0.6);
+}

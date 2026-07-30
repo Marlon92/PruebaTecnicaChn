@@ -1,0 +1,15 @@
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tabla {
+  width: 100%;
+}
+
+.vacio {
+  margin-top: 16px;
+  color: rgba(0, 0, 0, 0.6);
+}

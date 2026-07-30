@@ -1,0 +1,15 @@
+.contenedor {
+  height: calc(100vh - 64px);
+}
+
+.menu {
+  width: 260px;
+}
+
+.activo {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.contenido {
+  padding: 24px;
+}

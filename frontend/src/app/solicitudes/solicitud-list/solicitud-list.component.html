@@ -1,0 +1,54 @@
+<div class="cabecera">
+  <h1>{{ clienteId ? 'Solicitudes del cliente' : 'Solicitudes de prestamo' }}</h1>
+
+  <button *ngIf="clienteId" mat-raised-button color="primary" [routerLink]="['/clientes', clienteId, 'solicitudes', 'nueva']">
+    <mat-icon>add</mat-icon>
+    Nueva solicitud
+  </button>
+</div>
+
+<table mat-table [dataSource]="solicitudes" class="tabla">
+
+  <ng-container matColumnDef="cliente">
+    <th mat-header-cell *matHeaderCellDef>Cliente</th>
+    <td mat-cell *matCellDef="let solicitud">{{ solicitud.clienteNombreCompleto }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="monto">
+    <th mat-header-cell *matHeaderCellDef>Monto solicitado</th>
+    <td mat-cell *matCellDef="let solicitud">{{ solicitud.montoSolicitado | number:'1.2-2' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="plazo">
+    <th mat-header-cell *matHeaderCellDef>Plazo</th>
+    <td mat-cell *matCellDef="let solicitud">{{ solicitud.plazoMeses }} meses</td>
+  </ng-container>
+
+  <ng-container matColumnDef="estado">
+    <th mat-header-cell *matHeaderCellDef>Estado</th>
+    <td mat-cell *matCellDef="let solicitud">
+      <mat-chip>{{ solicitud.estado }}</mat-chip>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="saldo">
+    <th mat-header-cell *matHeaderCellDef>Saldo pendiente</th>
+    <td mat-cell *matCellDef="let solicitud">
+      {{ solicitud.estado === 'APROBADA' ? (solicitud.saldoPendiente | number:'1.2-2') : '-' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <td mat-cell *matCellDef="let solicitud">
+      <button mat-icon-button [routerLink]="['/solicitudes', solicitud.id]" title="Ver detalle">
+        <mat-icon>visibility</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+</table>
+
+<p *ngIf="solicitudes.length === 0" class="vacio">No hay solicitudes para mostrar.</p>
