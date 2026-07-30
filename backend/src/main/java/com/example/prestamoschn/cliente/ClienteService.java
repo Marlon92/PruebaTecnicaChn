@@ -12,12 +12,14 @@ import java.util.List;
 @Service
 public class ClienteService {
 
+    //inyectamos dependencias
     private final ClienteRepository clienteRepository;
 
     public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
     }
 
+    //obtenemos todos los clientes
     @Transactional(readOnly = true)
     public List<ClienteResponse> listar() {
         return clienteRepository.listar()
@@ -26,11 +28,13 @@ public class ClienteService {
                 .toList();
     }
 
+    //obtenemos clientes por id
     @Transactional(readOnly = true)
     public ClienteResponse obtener(Long id) {
         return dtoResponse(buscarClienteOFallar(id));
     }
 
+    //creamos un nuevo cliente
     @Transactional
     public ClienteResponse crear(ClienteRequest request) {
         
@@ -44,6 +48,7 @@ public class ClienteService {
         return dtoResponse(buscarClienteOFallar(id));
     }
 
+    //Actualizamos clinte
     @Transactional
     public ClienteResponse actualizar(Long id, ClienteRequest request) {
         buscarClienteOFallar(id);
@@ -57,17 +62,20 @@ public class ClienteService {
         return dtoResponse(buscarClienteOFallar(id));
     }
 
+    //Eliminamos cliente
     @Transactional
     public void eliminar(Long id) {
         buscarClienteOFallar(id);
         clienteRepository.eliminar(id);
     }
 
+    //valida que exista el cliente y sino da error
     private Cliente buscarClienteOFallar(Long id) {
         return clienteRepository.obtener(id)
                 .orElseThrow(() -> new EntityNotFoundException("No existe un cliente con id " + id));
     }
 
+    //valida si el dpi ya está en otro cliente
     private void validarDpi(String dpi, Long idClienteActual) {
         clienteRepository.buscarPorDpi(dpi)
                 .filter(existente -> !existente.getId().equals(idClienteActual))
@@ -76,6 +84,7 @@ public class ClienteService {
                 });
     }
 
+    //Parseamos lo del modelo a nuestro DTo de petición
     private void copiarDatos(ClienteRequest request, Cliente cliente) {
         cliente.setNombre(request.getNombre());
         cliente.setApellido(request.getApellido());
@@ -86,6 +95,7 @@ public class ClienteService {
         cliente.setTelefono(request.getTelefono());
     }
 
+    //Parseamos el model a nuestro DTO de respuesta
     private ClienteResponse dtoResponse(Cliente cliente) {
         ClienteResponse response = new ClienteResponse();
         response.setId(cliente.getId());

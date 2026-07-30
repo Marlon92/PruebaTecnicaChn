@@ -15,6 +15,7 @@ import java.util.Optional;
 @Repository
 public class ClienteRepository {
 
+    //Inyectamos EntityManager para poder interactuar con nuestra base de datos.
     private final EntityManager entityManager;
 
     public ClienteRepository(EntityManager entityManager) {
@@ -26,6 +27,8 @@ public class ClienteRepository {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("sp_cliente_listar");
         query.execute();
         List<Object[]> filas = query.getResultList();
+
+        //System.out.print(filas);
         return filas.stream().map(this::mapearCliente).toList();
     }
 
@@ -117,10 +120,15 @@ public class ClienteRepository {
         return cliente;
     }
 
+ //como mi id es Long, necesito asegurar que el valor obtenido se trate como un Long
     private Long aLong(Object valor) {
-        return valor == null ? null : ((Number) valor).longValue();
+        if (valor == null) {
+            return null;
+        }
+        return ((Number) valor).longValue();
     }
 
+    //Me aseguro que el dato sea tipo LocalDate para evitar excepciones por tipo de dato incorrecto    
     private LocalDate aLocalDate(Object valor) {
         if (valor == null) {
             return null;
@@ -128,6 +136,7 @@ public class ClienteRepository {
         return valor instanceof Date fecha ? fecha.toLocalDate() : (LocalDate) valor;
     }
 
+    //Me aseguro que el dato sea LocalDateTime para evitar excepciones
     private LocalDateTime aLocalDateTime(Object valor) {
         if (valor == null) {
             return null;

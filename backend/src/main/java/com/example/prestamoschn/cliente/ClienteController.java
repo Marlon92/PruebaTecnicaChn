@@ -39,6 +39,9 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<ClienteResponse> crear(@Valid @RequestBody ClienteRequest request) {
+        
+        //System.out.print(request);
+        
         ClienteResponse creado = clienteService.crear(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }

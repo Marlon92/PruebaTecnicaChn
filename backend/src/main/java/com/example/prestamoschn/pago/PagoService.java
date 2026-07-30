@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 public class PagoService {
 
+    //inyecto mi servicio de solicitudes y mi repositorio
     private final PagoRepository pagoRepository;
     private final SolicitudRepository solicitudRepository;
 
@@ -23,6 +24,7 @@ public class PagoService {
         this.solicitudRepository = solicitudRepository;
     }
 
+    //obtengo los pagos por id de solicitud
     @Transactional(readOnly = true)
     public List<PagoResponse> listar(Long solicitudId) {
         return pagoRepository.listarPorSolicitud(solicitudId)
@@ -31,6 +33,7 @@ public class PagoService {
                 .toList();
     }
 
+    //guardo un nuevo pago
     @Transactional
     public PagoResponse registrar(Long solicitudId, PagoRequest request) {
         SolicitudPrestamo solicitud = solicitudRepository.obtener(solicitudId)
@@ -41,8 +44,10 @@ public class PagoService {
         }
 
         BigDecimal totalPagado = pagoRepository.totalPagadoPorSolicitud(solicitudId);
+        //hago la resta de el total a pagar con el total pagado para calcular lo pendiente
         BigDecimal saldoPendiente = solicitud.getMontoTotalPagar().subtract(totalPagado);
 
+        //se valdia eque el pago no se pase de lo que debo
         if (request.getMonto().compareTo(saldoPendiente) > 0) {
             throw new IllegalStateException("El pago excede el saldo pendiente de " + saldoPendiente);
         }
@@ -58,6 +63,7 @@ public class PagoService {
         return aResponse(pago);
     }
 
+    //parseo mi modelo al DTO de respuesta
     private PagoResponse aResponse(Pago pago) {
         PagoResponse response = new PagoResponse();
         response.setId(pago.getId());

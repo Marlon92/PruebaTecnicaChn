@@ -21,5 +21,5 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'Gestion de Prestamos Bancarios';
+  title = 'App préstamos - Prueba CHN';
 }

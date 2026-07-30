@@ -32,7 +32,7 @@ export class ClienteListComponent implements OnInit {
 
   eliminar(cliente: Cliente): void {
     const confirmado = confirm(
-      `Eliminar a ${cliente.nombre} ${cliente.apellido} tambien eliminara sus solicitudes de prestamo. Desea continuar?`
+      `Eliminar a ${cliente.nombre} ${cliente.apellido} tambien eliminará sus solicitudes de prestamo. Desea continuar?`
     );
 
     if (!confirmado || cliente.id === undefined) {

@@ -19,21 +19,24 @@ import java.util.List;
 @RequestMapping("/api/solicitudes/{solicitudId}/pagos")
 public class PagoController {
 
+    //inyecto mi servicio de pago
     private final PagoService pagoService;
 
     public PagoController(PagoService pagoService) {
         this.pagoService = pagoService;
     }
 
+    //obtengo el id de solicitud y consulto
     @GetMapping
     public List<PagoResponse> listar(@PathVariable Long solicitudId) {
         return pagoService.listar(solicitudId);
     }
 
+    //método para registrar un nuevo pago
     @PostMapping
     public ResponseEntity<PagoResponse> registrar(@PathVariable Long solicitudId, @Valid @RequestBody PagoRequest request) {
         PagoResponse creado = pagoService.registrar(solicitudId, request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado); //devuelvo el estado CREADO 201
     }
 }
 

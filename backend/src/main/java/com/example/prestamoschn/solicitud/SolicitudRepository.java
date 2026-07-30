@@ -20,6 +20,7 @@ public class SolicitudRepository {
         this.entityManager = entityManager;
     }
 
+    //obtenemos las solicitudes
     @SuppressWarnings("unchecked")
     public List<SolicitudPrestamo> listar() {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("sp_solicitud_listar");
@@ -111,6 +112,7 @@ public class SolicitudRepository {
         return solicitud;
     }
 
+    //Convierto el valor a un numero cualquier y luego especifico que lo pase a long
     private Long aLong(Object valor) {
         return valor == null ? null : ((Number) valor).longValue();
     }

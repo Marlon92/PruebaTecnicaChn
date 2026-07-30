@@ -23,27 +23,32 @@ public class SolicitudService {
 
     public SolicitudService(SolicitudRepository solicitudRepository,
                              ClienteRepository clienteRepository,
-                             PagoRepository pagoRepository) {
+                             PagoRepository pagoRepository) 
+    {
         this.solicitudRepository = solicitudRepository;
         this.clienteRepository = clienteRepository;
         this.pagoRepository = pagoRepository;
     }
 
+    //devuelvo todas las solicitudes luego las parseo a mi DTO de respuesta
     @Transactional(readOnly = true)
     public List<SolicitudResponse> listar() {
         return solicitudRepository.listar().stream().map(this::aResponse).toList();
     }
 
+    //obtengo las solicitudes por cliente
     @Transactional(readOnly = true)
     public List<SolicitudResponse> listarPorCliente(Long clienteId) {
         return solicitudRepository.listarPorCliente(clienteId).stream().map(this::aResponse).toList();
     }
 
+    //obtengo la solicitud por id
     @Transactional(readOnly = true)
     public SolicitudResponse obtener(Long id) {
         return aResponse(buscarSolicitudOFallar(id));
     }
 
+    //se almacena una nueva solicitud
     @Transactional
     public SolicitudResponse crear(SolicitudRequest request) {
         clienteRepository.obtener(request.getClienteId())
@@ -60,14 +65,17 @@ public class SolicitudService {
         return aResponse(buscarSolicitudOFallar(id));
     }
 
+    //Aprobamos la solicitudes
     @Transactional
     public SolicitudResponse aprobar(Long id, AprobarSolicitudRequest request) {
         SolicitudPrestamo solicitud = buscarSolicitudOFallar(id);
 
+        //calculo el interes, el monto total lo multiplico por la tasa, ejemplo 5% y lo divido entre 100 para obtener el interes
         BigDecimal interes = solicitud.getMontoSolicitado()
                 .multiply(request.getTasaInteres())
                 .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
 
+        //como ya tengo el interes entonces al monto se lo añado.
         BigDecimal montoTotalPagar = solicitud.getMontoSolicitado().add(interes);
 
         solicitudRepository.aprobar(id, request.getTasaInteres(), montoTotalPagar, request.getComentario());
