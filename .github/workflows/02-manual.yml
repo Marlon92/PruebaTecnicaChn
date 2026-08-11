@@ -42,7 +42,7 @@ jobs:
           DRY_RUN: ${{ inputs.dry_run }}
           REASON: ${{ inputs.reason }}
         run:  |
-          echo "LOGGIN_LEVEL: $LOGGING_LEVEL"
+          echo "LOG_LEVEL: $LOG_LEVEL"
           echo "ENVIRONMENT: $ENVIRONTMENT"
           ECHO "DRY_RUN: $DRY_RUN"
           echo "REASON: $REASON"
